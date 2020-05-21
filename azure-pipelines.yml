@@ -10,24 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    command: 'build'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(c525b175-f8c2-499a-917e-6becf4bd321c)'
-    appType: 'webApp'
-    WebAppName: 'apazuredevopsdemo'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)' # Update this to match your need
